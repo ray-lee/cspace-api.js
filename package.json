@@ -1,0 +1,32 @@
+{
+  "name": "cspace-api",
+  "version": "0.0.1",
+  "description": "CollectionSpace resource service API wrapper",
+  "keywords": [
+    "collectionspace",
+    "cspace",
+    "service",
+    "resource",
+    "rest",
+    "api"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint *.js",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ray Lee <rhlee@berkeley.edu>",
+  "license": "ECL-2.0",
+  "devDependencies": {
+    "babel-core": "^6.13.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.1",
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^10.0.0",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^6.0.0",
+    "webpack": "^1.13.1"
+  }
+}
