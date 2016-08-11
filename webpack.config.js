@@ -1,15 +1,19 @@
 /* eslint import/no-extraneous-dependencies: "off" */
+
 const webpack = require('webpack');
 
+const library = 'cspace';
 const env = process.env.NODE_ENV;
+const isProduction = env === 'production';
+const filename = `${library}${isProduction ? '.min' : ''}.js`;
 
 const config = {
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
-    path: 'dist',
-    filename: 'CSpaceAPI.js',
-    library: 'CSpaceAPI',
+    filename,
+    library,
     libraryTarget: 'umd',
+    path: 'dist',
   },
   module: {
     loaders: [
@@ -28,7 +32,7 @@ const config = {
   ],
 };
 
-if (env === 'production') {
+if (isProduction) {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin()
   );
