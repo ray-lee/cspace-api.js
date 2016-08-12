@@ -19,7 +19,7 @@
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "webpack",
     "build:prod": "cross-env NODE_ENV=production webpack",
-    "test": "npm run test:specs && npm run test:integration",
+    "test": "npm run test:specs",
     "test:specs": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive test/specs",
     "test:integration": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive --slow 250 test/integration",
     "start": "cross-env NODE_ENV=test karma start"
