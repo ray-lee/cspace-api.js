@@ -44,7 +44,11 @@ describe(`run against ${config.url}`, () => {
       });
   });
 
-  it('can find the record', () => {
+  it('can find the record', function test() {
+    if (objectCsid === null) {
+      this.skip();
+    }
+
     const promise = localhost.read('collectionobjects',
       {
         params: {
@@ -63,7 +67,11 @@ describe(`run against ${config.url}`, () => {
             .with.property('csid', objectCsid);
   });
 
-  it('can read the record', () => {
+  it('can read the record', function test() {
+    if (objectCsid === null) {
+      this.skip();
+    }
+
     const promise = localhost.read(`collectionobjects/${objectCsid}`);
 
     return promise.should.eventually
@@ -76,7 +84,11 @@ describe(`run against ${config.url}`, () => {
               .with.property('comment', comment);
   });
 
-  it('can update the record', () => {
+  it('can update the record', function test() {
+    if (objectCsid === null) {
+      this.skip();
+    }
+
     const commentUpdate = `Updated at ${Date.now()}`;
 
     const promise = localhost.update(`collectionobjects/${objectCsid}`,
@@ -105,7 +117,11 @@ describe(`run against ${config.url}`, () => {
               .with.property('comment', commentUpdate);
   });
 
-  it('can delete the record', () => {
+  it('can delete the record', function test() {
+    if (objectCsid === null) {
+      this.skip();
+    }
+
     const promise = localhost.delete(`collectionobjects/${objectCsid}`);
 
     return promise.should.eventually

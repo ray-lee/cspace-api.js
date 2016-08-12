@@ -2,6 +2,8 @@
   "name": "cspace-api",
   "version": "0.0.1",
   "description": "CollectionSpace services API wrapper for browsers and Node.js",
+  "author": "Ray Lee <rhlee@berkeley.edu>",
+  "license": "ECL-2.0",
   "keywords": [
     "collectionspace",
     "cspace",
@@ -18,11 +20,10 @@
     "build:dev": "webpack",
     "build:prod": "cross-env NODE_ENV=production webpack",
     "test": "npm run test:specs && npm run test:integration",
-    "test:specs": "mocha --compilers js:babel-register --recursive test/specs",
-    "test:integration": "mocha --compilers js:babel-register --recursive --slow 250 test/integration"
+    "test:specs": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive test/specs",
+    "test:integration": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive --slow 250 test/integration",
+    "start": "cross-env NODE_ENV=test karma start"
   },
-  "author": "Ray Lee <rhlee@berkeley.edu>",
-  "license": "ECL-2.0",
   "devDependencies": {
     "babel-core": "^6.13.1",
     "babel-loader": "^6.2.4",
@@ -38,8 +39,15 @@
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.0.0",
+    "karma": "^1.2.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.1.1",
+    "karma-mocha-reporter": "^2.1.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
-    "sinon": "^1.17.5",
     "webpack": "^1.13.1"
   },
   "dependencies": {

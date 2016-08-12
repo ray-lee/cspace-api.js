@@ -8,7 +8,3 @@ This library provides a JavaScript API for operating on CollectionSpace resource
 - [Promise](http://www.html5rocks.com/en/tutorials/es6/promises/) based
 
 ## API
-
-### index
-
-Creates an instance of the API wrapper.
