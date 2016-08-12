@@ -1,13 +1,13 @@
 import util from 'util';
 import cspace from '../src/cspace';
 
-const localhost = cspace.instance({
+const cs = cspace.instance({
   url: 'http://localhost:8180/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 });
 
-localhost.create('collectionobjects',
+cs.create('collectionobjects',
   {
     content: {
       document: {

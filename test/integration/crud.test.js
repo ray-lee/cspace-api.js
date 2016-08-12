@@ -12,14 +12,14 @@ const config = {
 };
 
 describe(`run against ${config.url}`, () => {
-  const localhost = cspace.instance(config);
+  const cs = cspace.instance(config);
   const objectNumber = `TEST.${Date.now()}`;
   const comment = `Created by cspace-api.js ${(new Date()).toISOString()}`;
 
   let objectCsid = null;
 
   it('can create an object record', () => {
-    const promise = localhost.create('collectionobjects',
+    const promise = cs.create('collectionobjects',
       {
         content: {
           document: {
@@ -49,7 +49,7 @@ describe(`run against ${config.url}`, () => {
       this.skip();
     }
 
-    const promise = localhost.read('collectionobjects',
+    const promise = cs.read('collectionobjects',
       {
         params: {
           pgSz: 5,
@@ -72,7 +72,7 @@ describe(`run against ${config.url}`, () => {
       this.skip();
     }
 
-    const promise = localhost.read(`collectionobjects/${objectCsid}`);
+    const promise = cs.read(`collectionobjects/${objectCsid}`);
 
     return promise.should.eventually
       .include({ status: 200 })
@@ -91,7 +91,7 @@ describe(`run against ${config.url}`, () => {
 
     const commentUpdate = `Updated at ${Date.now()}`;
 
-    const promise = localhost.update(`collectionobjects/${objectCsid}`,
+    const promise = cs.update(`collectionobjects/${objectCsid}`,
       {
         content: {
           document: {
@@ -122,7 +122,7 @@ describe(`run against ${config.url}`, () => {
       this.skip();
     }
 
-    const promise = localhost.delete(`collectionobjects/${objectCsid}`);
+    const promise = cs.delete(`collectionobjects/${objectCsid}`);
 
     return promise.should.eventually
       .include({ status: 200 });

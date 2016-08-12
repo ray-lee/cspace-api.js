@@ -1,13 +1,13 @@
 import util from 'util';
 import cspace from '../src/cspace';
 
-const localhost = cspace.instance({
+const cs = cspace.instance({
   url: 'http://localhost:8180/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 });
 
-localhost.delete('collectionobjects/7fed15cc-dfa7-477c-90e2')
+cs.delete('collectionobjects/7fed15cc-dfa7-477c-90e2')
   .then(response => {
     console.log(util.inspect(response, {
       depth: 6,
