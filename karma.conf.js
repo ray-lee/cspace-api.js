@@ -40,12 +40,6 @@ const sauceLaunchers = {
     version: 'latest',
     platform: 'Windows 10',
   },
-  'ie-latest-win8.1': {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    version: 'latest',
-    platform: 'Windows 8.1',
-  },
   'safari-ios-9.3': {
     base: 'SauceLabs',
     browserName: 'safari',
