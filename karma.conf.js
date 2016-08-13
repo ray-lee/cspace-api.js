@@ -50,6 +50,7 @@ module.exports = function karma(config) {
       console.log('Running on Sauce Labs.');
 
       customLaunchers = sauceLaunchers;
+      browsers = Object.keys(customLaunchers);
     } else {
       // We're on Travis, but Sauce Labs environment variables aren't available.
       // Run on Travis, using Firefox.
