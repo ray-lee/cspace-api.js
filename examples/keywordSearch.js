@@ -2,7 +2,7 @@ import util from 'util';
 import cspace from '../src/cspace';
 
 const cs = cspace.instance({
-  url: 'http://localhost:8180/cspace-services',
+  url: 'http://nightly.collectionspace.org:8180/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 });
