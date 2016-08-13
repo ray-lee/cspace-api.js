@@ -28,11 +28,31 @@ const sauceLaunchers = {
     version: 'latest-1',
     platform: 'OS X 10.11',
   },
+  'safari-latest-osx': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    version: 'latest',
+    platform: 'OS X 10.11',
+  },
   'edge-latest-win10': {
     base: 'SauceLabs',
-    browserName: 'MicrosoftEdge',
+    browserName: 'microsoftedge',
     version: 'latest',
     platform: 'Windows 10',
+  },
+  'ie-latest-win8.1': {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    version: 'latest',
+    platform: 'Windows 8.1',
+  },
+  'safari-ios-9.3': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platformName: 'iOS',
+    platformVersion: '9.3',
+    deviceName: 'iPad Retina Simulator',
+    appiumVersion: '1.5.3',
   },
 };
 
@@ -133,5 +153,12 @@ module.exports = function karma(config) {
       recordScreenshots: false,
       public: true,
     },
+
+    // Tolerate Sauce Labs slowness/flakiness
+
+    browserDisconnectTimeout: 10000,
+    browserDisconnectTolerance: 1,
+    browserNoActivityTimeout: 4 * 60 * 1000,
+    captureTimeout: 4 * 60 * 1000,
   });
 };
