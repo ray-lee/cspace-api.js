@@ -11,7 +11,7 @@ const config = {
   password: 'Administrator',
 };
 
-describe(`run against ${config.url}`, () => {
+describe(`crud operations on ${config.url}`, () => {
   const cs = cspace.instance(config);
   const objectNumber = `TEST.${Date.now()}`;
   const comment = `Created by cspace-api.js ${(new Date()).toISOString()}`;
