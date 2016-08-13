@@ -114,6 +114,7 @@ module.exports = function karma(config) {
 
     reporters: [
       'mocha',
+      'coverage',
       'saucelabs',
     ],
 
@@ -148,13 +149,23 @@ module.exports = function karma(config) {
     port: 9876,
     colors: true,
 
+    // Code will have been instrumented via Babel and babel-plugin-istanbul
+    // when NODE_ENV is 'test' (see .babelrc).
+
+    coverageReporter: {
+      type: 'json',
+      dir: 'coverage/',
+    },
+
+    // Sauce Labs configuration.
+
     sauceLabs: {
       testName: 'cspace-api tests',
       recordScreenshots: false,
       public: true,
     },
 
-    // Tolerate Sauce Labs slowness/flakiness
+    // Tolerate Sauce Labs slowness/flakiness.
 
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 1,
