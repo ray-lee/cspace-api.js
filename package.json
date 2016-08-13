@@ -14,6 +14,7 @@
   ],
   "main": "src/index.js",
   "scripts": {
+    "clean": "rimraf lib dist coverage",
     "coverage": "istanbul report --root coverage",
     "doc": "documentation readme src/*.js -s \"API\"",
     "lint": "eslint *.js src test examples",
@@ -60,6 +61,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
+    "rimraf": "^2.5.4",
     "webpack": "^1.13.1"
   },
   "dependencies": {
