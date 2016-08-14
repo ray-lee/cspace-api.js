@@ -2,10 +2,14 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import cspace from '../../src/cspace';
 
+const expect = chai.expect;
+
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('error handling', () => {
+describe('error handling', function suite() {
+  this.timeout(20000);
+
   context('non-existent hostname', () => {
     const cs = cspace.instance({
       url: 'http://xyzy.qaqaqa',
@@ -14,8 +18,7 @@ describe('error handling', () => {
     it('rejects read', () =>
       cs.read('collectionobjects').should.eventually.be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .and.property('response', undefined)
-    );
+        .and.property('response', undefined));
   });
 
   context('incorrect port number', () => {
@@ -24,11 +27,17 @@ describe('error handling', () => {
     });
 
     it('rejects read', function test() {
-      this.timeout(20000);
-
       return cs.read('collectionobjects').should.eventually.be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .and.property('response', undefined);
+        .then((error) => {
+          if (error.response) {
+            // MS Edge returns this as a 502 Bad Gateway response.
+            return error.response.should.have.property('status', 502);
+          }
+
+          // Other browsers return no response.
+          return expect(error.response).to.equal(undefined);
+        });
     });
   });
 
@@ -44,8 +53,7 @@ describe('error handling', () => {
         .and.have.all.keys(['name', 'code', 'message', 'response'])
         .and.property('response')
           .that.has.all.keys(['status', 'statusText', 'headers', 'data'])
-          .and.property('status', 401)
-    );
+          .and.property('status', 401));
   });
 
   context('non-existent resource', () => {
@@ -60,7 +68,6 @@ describe('error handling', () => {
         .and.have.all.keys(['name', 'code', 'message', 'response'])
         .and.property('response')
           .that.has.all.keys(['status', 'statusText', 'headers', 'data'])
-          .and.property('status', 404)
-    );
+          .and.property('status', 404));
   });
 });

@@ -11,16 +11,16 @@ const config = {
   password: 'Administrator',
 };
 
-describe(`crud operations on ${config.url}`, () => {
+describe(`crud operations on ${config.url}`, function suite() {
+  this.timeout(20000);
+
   const cs = cspace.instance(config);
   const objectNumber = `TEST.${Date.now()}`;
   const comment = `Created by cspace-api.js ${(new Date()).toISOString()}`;
 
   let objectCsid = null;
 
-  it('can create an object record', function test() {
-    this.timeout(10000);
-
+  it('can create an object record', () => {
     const promise = cs.create('collectionobjects',
       {
         content: {
@@ -47,8 +47,6 @@ describe(`crud operations on ${config.url}`, () => {
   });
 
   it('can find the record', function test() {
-    this.timeout(10000);
-
     if (objectCsid === null) {
       this.skip();
     }
@@ -72,8 +70,6 @@ describe(`crud operations on ${config.url}`, () => {
   });
 
   it('can read the record', function test() {
-    this.timeout(10000);
-
     if (objectCsid === null) {
       this.skip();
     }
@@ -91,8 +87,6 @@ describe(`crud operations on ${config.url}`, () => {
   });
 
   it('can update the record', function test() {
-    this.timeout(10000);
-
     if (objectCsid === null) {
       this.skip();
     }
