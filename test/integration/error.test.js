@@ -28,7 +28,7 @@ describe('error handling', () => {
 
       return cs.read('collectionobjects').should.eventually.be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .and.property('response', undefined)
+        .and.property('response', undefined);
     });
   });
 
