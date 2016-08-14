@@ -18,7 +18,9 @@ describe(`crud operations on ${config.url}`, () => {
 
   let objectCsid = null;
 
-  it('can create an object record', () => {
+  it('can create an object record', function test() {
+    this.timeout(10000);
+
     const promise = cs.create('collectionobjects',
       {
         content: {
@@ -45,6 +47,8 @@ describe(`crud operations on ${config.url}`, () => {
   });
 
   it('can find the record', function test() {
+    this.timeout(10000);
+
     if (objectCsid === null) {
       this.skip();
     }
@@ -68,6 +72,8 @@ describe(`crud operations on ${config.url}`, () => {
   });
 
   it('can read the record', function test() {
+    this.timeout(10000);
+
     if (objectCsid === null) {
       this.skip();
     }
@@ -85,6 +91,8 @@ describe(`crud operations on ${config.url}`, () => {
   });
 
   it('can update the record', function test() {
+    this.timeout(10000);
+
     if (objectCsid === null) {
       this.skip();
     }
