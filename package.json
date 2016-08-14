@@ -34,6 +34,7 @@
     "start": "cross-env NODE_ENV=test karma start"
   },
   "devDependencies": {
+    "babel-cli": "^6.11.4",
     "babel-core": "^6.13.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-istanbul": "^1.0.3",
