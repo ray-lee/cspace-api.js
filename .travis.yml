@@ -15,3 +15,5 @@ cache:
   directories:
   - $HOME/.npm
   - node_modules
+addons:
+  firefox: "latest"
