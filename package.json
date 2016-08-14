@@ -14,6 +14,7 @@
   ],
   "main": "src/index.js",
   "scripts": {
+    "clean": "rimraf lib dist coverage",
     "coverage": "istanbul report --root coverage",
     "doc": "documentation readme src/*.js -s \"API\"",
     "lint": "eslint *.js src test examples",
@@ -24,9 +25,9 @@
     "test": "npm run test-node && npm run test-browser",
     "test-specs": "npm run test-node-specs && npm run test-browser-specs",
     "test-integration": "npm run test-node-integration && npm run test-browser-integration",
-    "test-node": "npm run test-node-specs && npm run test-node-integration",
-    "test-node-specs": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive test/specs",
-    "test-node-integration": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive --slow 250 test/integration",
+    "test-node": "cross-env NODE_ENV=test nyc mocha --compilers js:babel-register --recursive test",
+    "test-node-specs": "cross-env NODE_ENV=test nyc mocha --compilers js:babel-register --recursive test/specs",
+    "test-node-integration": "cross-env NODE_ENV=test nyc mocha --compilers js:babel-register --recursive test/integration",
     "test-browser": "cross-env NODE_ENV=test karma start --singleRun=true",
     "test-browser-specs": "cross-env NODE_ENV=test karma start --singleRun=true --dir=specs",
     "test-browser-integration": "cross-env NODE_ENV=test karma start --singleRun=true --dir=integration",
@@ -60,10 +61,25 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
+    "nyc": "^8.0.0",
+    "rimraf": "^2.5.4",
     "webpack": "^1.13.1"
   },
   "dependencies": {
     "axios": "^0.13.1",
     "extend": "^3.0.0"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "reporter": [
+      "json",
+      "text"
+    ],
+    "report-dir": "./coverage/Node.js",
+    "sourceMap": false,
+    "instrument": false,
+    "cache": true
   }
 }
