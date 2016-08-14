@@ -1,48 +1,31 @@
 import axios from 'axios';
 import config from './config';
 
-function normalizedResponse(response) {
-  if (typeof response !== 'object') {
-    return response;
+function createResponse(axiosResponse) {
+  if (typeof axiosResponse !== 'object') {
+    return axiosResponse;
   }
 
-  const normalized = {
-    status: response.status,
-    statusText: response.statusText,
-    headers: response.headers,
-    data: response.data,
+  return {
+    status: axiosResponse.status,
+    statusText: axiosResponse.statusText,
+    headers: axiosResponse.headers,
+    data: axiosResponse.data,
   };
-
-  return normalized;
 }
 
-function normalizedError(error) {
-  if ('config' in error || 'response' in error) {
-    const normalized = new Error();
-
-    Object.assign(normalized, error);
-
-    if ('config' in normalized) {
-      delete normalized.config;
-    }
-
-    if ('response' in error) {
-      normalized.response = normalizedResponse(error.response);
-
-      if (typeof normalized.response === 'undefined') {
-        delete normalized.response;
-      }
-    }
-
-    return normalized;
-  }
-
-  return error;
+function createError(axiosError) {
+  return {
+    name: axiosError.name,
+    code: axiosError.code,
+    message: axiosError.message,
+    response: createResponse(axiosError.response),
+  };
 }
 
 axios.interceptors.response.use(
-  response => normalizedResponse(response),
-  error => Promise.reject(normalizedError(error))
+  response => createResponse(response),
+  error => Promise.reject(createError(error))
 );
 
 const methods = {

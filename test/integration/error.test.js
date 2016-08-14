@@ -13,7 +13,8 @@ describe('error handling', () => {
 
     it('rejects read', () =>
       cs.read('collectionobjects').should.eventually.be.rejected
-        .and.not.contain.keys(['response'])
+        .and.have.all.keys(['name', 'code', 'message', 'response'])
+        .and.property('response', undefined)
     );
   });
 
@@ -26,7 +27,8 @@ describe('error handling', () => {
       this.timeout(20000);
 
       return cs.read('collectionobjects').should.eventually.be.rejected
-        .and.not.contain.keys(['response']);
+        .and.have.all.keys(['name', 'code', 'message', 'response'])
+        .and.property('response', undefined)
     });
   });
 
@@ -39,7 +41,8 @@ describe('error handling', () => {
 
     it('rejects read with status 401', () =>
       cs.read('collectionobjects').should.eventually.be.rejected
-        .with.property('response')
+        .and.have.all.keys(['name', 'code', 'message', 'response'])
+        .and.property('response')
           .that.has.all.keys(['status', 'statusText', 'headers', 'data'])
           .and.property('status', 401)
     );
@@ -54,7 +57,8 @@ describe('error handling', () => {
 
     it('rejects read with status 404', () =>
       cs.read('collectionobjects/somecsid').should.eventually.be.rejected
-        .with.property('response')
+        .and.have.all.keys(['name', 'code', 'message', 'response'])
+        .and.property('response')
           .that.has.all.keys(['status', 'statusText', 'headers', 'data'])
           .and.property('status', 404)
     );
