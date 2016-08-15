@@ -10,15 +10,18 @@ chai.should();
 describe('error handling', function suite() {
   this.timeout(20000);
 
+  const url = 'http://nightly.collectionspace.org:8180/cspace-services';
+
   context('non-existent hostname', () => {
     const cs = cspace.instance({
       url: 'http://xyzy.qaqaqa',
     });
 
     it('rejects read', () =>
-      cs.read('collectionobjects').should.eventually.be.rejected
+      cs.read('collectionobjects').should.eventually
+        .be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .and.property('response', undefined));
+        .and.have.property('response', undefined));
   });
 
   context('incorrect port number', () => {
@@ -26,48 +29,50 @@ describe('error handling', function suite() {
       url: 'http://localhost:7777/cspace-services',
     });
 
-    it('rejects read', function test() {
-      return cs.read('collectionobjects').should.eventually.be.rejected
+    it('rejects read', () =>
+      cs.read('collectionobjects').should.eventually
+        .be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .then((error) => {
+        .then(error => {
           if (error.response) {
-            // MS Edge returns this as a 502 Bad Gateway response.
+            // MS Edge returns a 502 Bad Gateway response.
             return error.response.should.have.property('status', 502);
           }
 
           // Other browsers return no response.
           return expect(error.response).to.equal(undefined);
-        });
-    });
+        }));
   });
 
-  context('incorrect password', () => {
+  context(`incorrect password on ${url}`, () => {
     const cs = cspace.instance({
-      url: 'http://nightly.collectionspace.org:8180/cspace-services',
+      url,
       username: 'admin@core.collectionspace.org',
       password: 'Wrong',
     });
 
     it('rejects read with status 401', () =>
-      cs.read('collectionobjects').should.eventually.be.rejected
+      cs.read('collectionobjects').should.eventually
+        .be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .and.property('response')
+        .and.have.property('response')
           .that.has.all.keys(['status', 'statusText', 'headers', 'data'])
-          .and.property('status', 401));
+          .and.has.property('status', 401));
   });
 
-  context('non-existent resource', () => {
+  context(`non-existent resource on ${url}`, () => {
     const cs = cspace.instance({
-      url: 'http://nightly.collectionspace.org:8180/cspace-services',
+      url,
       username: 'admin@core.collectionspace.org',
       password: 'Administrator',
     });
 
     it('rejects read with status 404', () =>
-      cs.read('collectionobjects/somecsid').should.eventually.be.rejected
+      cs.read('collectionobjects/badcsid').should.eventually
+        .be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .and.property('response')
+        .and.have.property('response')
           .that.has.all.keys(['status', 'statusText', 'headers', 'data'])
-          .and.property('status', 404));
+          .and.has.property('status', 404));
   });
 });

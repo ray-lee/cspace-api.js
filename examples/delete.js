@@ -1,5 +1,5 @@
-import util from 'util';
 import cspace from '../src/cspace';
+import log from './helpers/log';
 
 const cs = cspace.instance({
   url: 'http://nightly.collectionspace.org:8180/cspace-services',
@@ -7,16 +7,6 @@ const cs = cspace.instance({
   password: 'Administrator',
 });
 
-cs.delete('collectionobjects/7fed15cc-dfa7-477c-90e2')
-  .then(response => {
-    console.log(util.inspect(response, {
-      depth: 6,
-      colors: true,
-    }));
-  })
-  .catch(error => {
-    console.log(util.inspect(error, {
-      depth: 6,
-      colors: true,
-    }));
-  });
+cs.delete('collectionobjects/137eacd9-3e17-4c9f-9aec')
+  .then(response => log(response))
+  .catch(error => log(error));

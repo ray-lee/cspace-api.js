@@ -98,11 +98,11 @@ describe('config', () => {
     it('should not copy deep objects unnecessarily', () => {
       const cfg1 = {
         operation: 'read',
-        content: {},
+        data: {},
       };
 
       const cfg2 = {
-        content: {
+        data: {
           collectionobjects_common: {
             objectNumber: '1234',
             comments: {
@@ -117,8 +117,8 @@ describe('config', () => {
       };
 
       config.merge(cfg1, cfg2)
-        .should.have.deep.property('content.collectionobjects_common')
-          .that.equals(cfg2.content.collectionobjects_common);
+        .should.have.deep.property('data.collectionobjects_common')
+          .that.equals(cfg2.data.collectionobjects_common);
     });
   });
 
@@ -142,18 +142,18 @@ describe('config', () => {
 
     it('should return true if the option is an empty object', () => {
       const cfg = {
-        content: {},
+        data: {},
       };
 
-      config.hasOption(cfg, 'content').should.equal(true);
+      config.hasOption(cfg, 'data').should.equal(true);
     });
 
     it('should return true if the option is an empty array', () => {
       const cfg = {
-        content: [],
+        data: [],
       };
 
-      config.hasOption(cfg, 'content').should.equal(true);
+      config.hasOption(cfg, 'data').should.equal(true);
     });
 
     it('should return false if the option is not present', () => {

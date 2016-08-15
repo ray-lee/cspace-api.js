@@ -5,40 +5,39 @@ import cspace from '../../src/cspace';
 chai.use(chaiAsPromised);
 chai.should();
 
-const config = {
+const instanceConfig = {
   url: 'http://nightly.collectionspace.org:8180/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 };
 
-describe(`crud operations on ${config.url}`, function suite() {
+describe(`crud operations on ${instanceConfig.url}`, function suite() {
   this.timeout(20000);
 
-  const cs = cspace.instance(config);
+  const cs = cspace.instance(instanceConfig);
   const objectNumber = `TEST.${Date.now()}`;
   const comment = `Created by cspace-api.js ${(new Date()).toISOString()}`;
 
-  let objectCsid = null;
+  let objectCsid = '';
 
   it('can create an object record', () => {
-    const promise = cs.create('collectionobjects',
-      {
-        content: {
-          document: {
-            '@name': 'collectionobjects',
-            'ns2:collectionobjects_common': {
-              '@xmlns:ns2': 'http://collectionspace.org/services/collectionobject',
-              '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-              objectNumber,
-              comments: {
-                comment,
-              },
+    const config = {
+      data: {
+        document: {
+          '@name': 'collectionobjects',
+          'ns2:collectionobjects_common': {
+            '@xmlns:ns2': 'http://collectionspace.org/services/collectionobject',
+            '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+            objectNumber,
+            comments: {
+              comment,
             },
           },
         },
-      });
+      },
+    };
 
-    return promise.should.eventually
+    return cs.create('collectionobjects', config).should.eventually
       .include({ status: 201 })
       .and.have.deep.property('headers.location').that.is.ok
       .then(location => {
@@ -47,21 +46,20 @@ describe(`crud operations on ${config.url}`, function suite() {
   });
 
   it('can find the record', function test() {
-    if (objectCsid === null) {
+    if (!objectCsid) {
       this.skip();
     }
 
-    const promise = cs.read('collectionobjects',
-      {
-        params: {
-          pgSz: 5,
-          pgNum: 0,
-          as: `collectionobjects_common:objectNumber ILIKE "%${objectNumber}%"`,
-          wf_deleted: false,
-        },
-      });
+    const config = {
+      params: {
+        pgSz: 5,
+        pgNum: 0,
+        as: `collectionobjects_common:objectNumber ILIKE "%${objectNumber}%"`,
+        wf_deleted: false,
+      },
+    };
 
-    return promise.should.eventually
+    return cs.read('collectionobjects', config).should.eventually
       .include({ status: 200 })
       .and.have.property('data')
         .with.property('ns2:abstract-common-list')
@@ -70,13 +68,11 @@ describe(`crud operations on ${config.url}`, function suite() {
   });
 
   it('can read the record', function test() {
-    if (objectCsid === null) {
+    if (!objectCsid) {
       this.skip();
     }
 
-    const promise = cs.read(`collectionobjects/${objectCsid}`);
-
-    return promise.should.eventually
+    return cs.read(`collectionobjects/${objectCsid}`).should.eventually
       .include({ status: 200 })
       .and.have.property('data')
         .with.property('document')
@@ -87,29 +83,28 @@ describe(`crud operations on ${config.url}`, function suite() {
   });
 
   it('can update the record', function test() {
-    if (objectCsid === null) {
+    if (!objectCsid) {
       this.skip();
     }
 
     const commentUpdate = `Updated at ${Date.now()}`;
 
-    const promise = cs.update(`collectionobjects/${objectCsid}`,
-      {
-        content: {
-          document: {
-            '@name': 'collectionobjects',
-            'ns2:collectionobjects_common': {
-              '@xmlns:ns2': 'http://collectionspace.org/services/collectionobject',
-              '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-              comments: {
-                comment: commentUpdate,
-              },
+    const config = {
+      data: {
+        document: {
+          '@name': 'collectionobjects',
+          'ns2:collectionobjects_common': {
+            '@xmlns:ns2': 'http://collectionspace.org/services/collectionobject',
+            '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+            comments: {
+              comment: commentUpdate,
             },
           },
         },
-      });
+      },
+    };
 
-    return promise.should.eventually
+    return cs.update(`collectionobjects/${objectCsid}`, config).should.eventually
       .include({ status: 200 })
       .and.have.property('data')
         .with.property('document')
@@ -120,13 +115,11 @@ describe(`crud operations on ${config.url}`, function suite() {
   });
 
   it('can delete the record', function test() {
-    if (objectCsid === null) {
+    if (!objectCsid) {
       this.skip();
     }
 
-    const promise = cs.delete(`collectionobjects/${objectCsid}`);
-
-    return promise.should.eventually
+    return cs.delete(`collectionobjects/${objectCsid}`).should.eventually
       .include({ status: 200 });
   });
 });

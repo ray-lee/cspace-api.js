@@ -1,5 +1,5 @@
-import util from 'util';
 import cspace from '../src/cspace';
+import log from './helpers/log';
 
 const cs = cspace.instance({
   url: 'http://nightly.collectionspace.org:8180/cspace-services',
@@ -7,16 +7,6 @@ const cs = cspace.instance({
   password: 'Administrator',
 });
 
-cs.read('collectionobjects/0a5f1405-60e2-417b-82fc')
-  .then(response => {
-    console.log(util.inspect(response, {
-      depth: 6,
-      colors: true,
-    }));
-  })
-  .catch(error => {
-    console.log(util.inspect(error, {
-      depth: 6,
-      colors: true,
-    }));
-  });
+cs.read('collectionobjects/62eba826-cb66-4462-b16e')
+  .then(response => log(response))
+  .catch(error => log(error));

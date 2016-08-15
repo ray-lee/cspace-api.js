@@ -1,5 +1,11 @@
 import axios from 'axios';
+import URLSearchParams from 'url-search-params';
 import config from './config';
+
+const mimeType = {
+  form: 'application/x-www-form-urlencoded',
+  json: 'application/json',
+};
 
 function createResponse(axiosResponse) {
   if (typeof axiosResponse !== 'object') {
@@ -48,21 +54,43 @@ function getBaseUrl(requestConfig) {
 }
 
 function getHeaders(requestConfig) {
-  if (!config.hasOption(requestConfig, 'token')) {
-    return null;
+  const headers = {};
+
+  if (config.hasOption(requestConfig, 'type')) {
+    let type = requestConfig.type;
+    
+    if (type === mimeType.form || type === mimeType.json) {
+      type = `${type};charset=utf-8`;
+    }
+
+    headers['Content-Type'] = type;
   }
 
-  return {
-    Authorization: `Bearer ${requestConfig.token}`,
-  };
+  if (config.hasOption(requestConfig, 'token')) {
+    headers.Authorization = `Bearer ${requestConfig.token}`;
+  }
+
+  return headers;
 }
 
 function getParams(requestConfig) {
   return requestConfig.params;
 }
 
+function getFormData(data) {
+  const params = new URLSearchParams();
+
+  Object.keys(data).forEach(key => params.set(key, data[key]));
+
+  return params.toString();
+}
+
 function getData(requestConfig) {
-  return requestConfig.content;
+  if (requestConfig.type === mimeType.form) {
+    return getFormData(requestConfig.data);
+  }
+
+  return requestConfig.data;
 }
 
 function getAuth(requestConfig) {
@@ -98,6 +126,7 @@ export default {
   getBaseUrl,
   getHeaders,
   getParams,
+  getFormData,
   getData,
   getAuth,
   getConfig,

@@ -69,39 +69,93 @@ describe('agent', () => {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
       };
 
-      agent.getHeaders(config).should.deep.equal({
+      agent.getHeaders(config).should.include({
         Authorization: `Bearer ${config.token}`,
       });
     });
 
-    it('should return null if the token is empty', () => {
+    it('should not return an authorization header if the token is empty', () => {
       const config = {
         token: '',
       };
 
-      expect(agent.getHeaders(config)).to.be.a('null');
+      agent.getHeaders(config).should.not.contain.keys('Authorization');
     });
 
-    it('should return null if the token is null', () => {
+    it('should not return an authorization header if the token is null', () => {
       const config = {
         token: null,
       };
 
-      expect(agent.getHeaders(config)).to.be.a('null');
+      agent.getHeaders(config).should.not.contain.keys('Authorization');
     });
 
-    it('should return null if the token is undefined', () => {
+    it('should not return an authorization header if the token is undefined', () => {
       const config = {
         token: undefined,
       };
 
-      expect(agent.getHeaders(config)).to.be.a('null');
+      agent.getHeaders(config).should.not.contain.keys('Authorization');
     });
 
-    it('should return null if no token is present', () => {
+    it('should not return an authorization header if no token is present', () => {
       const config = {};
 
-      expect(agent.getHeaders(config)).to.be.a('null');
+      agent.getHeaders(config).should.not.contain.keys('Authorization');
+    });
+    
+    it('should return a content type header if a type is present', () => {
+      const config = {
+        type: 'image/jpeg'
+      };
+
+      agent.getHeaders(config).should.include({
+        'Content-Type': 'image/jpeg',
+      });
+    });
+    
+    it('should return a content type header with a charset if type is json', () => {
+      const config = {
+        type: 'application/json'
+      };
+
+      agent.getHeaders(config).should.include({
+        'Content-Type': 'application/json;charset=utf-8',
+      });
+    });
+    
+    it('should return a content type header with a charset if type is form', () => {
+      const config = {
+        type: 'application/x-www-form-urlencoded'
+      };
+
+      agent.getHeaders(config).should.include({
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      });
+    });
+    
+    it('should not return a content type header if the type is empty', () => {
+      const config = {
+        type: '',
+      };
+
+      agent.getHeaders(config).should.not.contain.keys('Content-Type');
+    });
+
+    it('should not return a content type header if the type is null', () => {
+      const config = {
+        type: null,
+      };
+
+      agent.getHeaders(config).should.not.contain.keys('Content-Type');
+    });
+
+    it('should not return a content type header if the type is undefined', () => {
+      const config = {
+        type: undefined,
+      };
+
+      agent.getHeaders(config).should.not.contain.keys('Content-Type');
     });
   });
 
@@ -121,16 +175,53 @@ describe('agent', () => {
     });
   });
 
-  describe('getData()', () => {
-    it('should return the content', () => {
-      const config = {
-        content: {
-          objectNumber: '2016.1.1',
-          description: 'A museum object',
-        },
+  describe('getFormData()', () => {
+    it('should convert the data to a url-encoded parameter string', () => {
+      const data = {
+        objectNumber: '2016.1.1',
+        description: 'A museum object',
       };
 
-      agent.getData(config).should.deep.equal(config.content);
+      agent.getFormData(data).should.equal('objectNumber=2016.1.1&description=A+museum+object');
+    });
+
+    it('should encode non-ascii characters', () => {
+      const data = {
+        objectNumber: '2016.1.1',
+        description: 'åéîøü',
+      };
+
+      agent.getFormData(data).should.equal('objectNumber=2016.1.1&description=%C3%A5%C3%A9%C3%AE%C3%B8%C3%BC');
+    });
+    
+    it('should encode puctuation', () => {
+      const data = {
+        objectNumber: '2016.1.1',
+        description: 'this & that = "something"',
+      };
+
+      agent.getFormData(data).should.equal('objectNumber=2016.1.1&description=this+%26+that+%3D+%22something%22');
+    });
+  });
+
+  describe('getData()', () => {
+    const config = {
+      data: {
+        objectNumber: '2016.1.1',
+        description: 'A museum object',
+      },
+    };
+
+    it('should return the data if type is not form', () => {
+      agent.getData(config).should.deep.equal(config.data);
+    });
+    
+    it('should return a url-encoded parameter string if type is form', () => {
+      const formConfig = Object.assign({}, config, {
+        type: 'application/x-www-form-urlencoded',
+      });
+      
+      agent.getData(formConfig).should.equal('objectNumber=2016.1.1&description=A+museum+object');
     });
   });
 

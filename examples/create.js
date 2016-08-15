@@ -1,5 +1,5 @@
-import util from 'util';
 import cspace from '../src/cspace';
+import log from './helpers/log';
 
 const cs = cspace.instance({
   url: 'http://nightly.collectionspace.org:8180/cspace-services',
@@ -7,31 +7,22 @@ const cs = cspace.instance({
   password: 'Administrator',
 });
 
-cs.create('collectionobjects',
-  {
-    content: {
-      document: {
-        '@name': 'collectionobjects',
-        'ns2:collectionobjects_common': {
-          '@xmlns:ns2': 'http://collectionspace.org/services/collectionobject',
-          '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-          objectNumber: `TEST.${Date.now()}`,
-          comments: {
-            comment: `Created by cspace-api.js ${(new Date()).toISOString()}`,
-          },
+const config = {
+  data: {
+    document: {
+      '@name': 'collectionobjects',
+      'ns2:collectionobjects_common': {
+        '@xmlns:ns2': 'http://collectionspace.org/services/collectionobject',
+        '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        objectNumber: `TEST.${Date.now()}`,
+        comments: {
+          comment: `Created by cspace-api.js ${(new Date()).toISOString()}`,
         },
       },
     },
-  })
-  .then(response => {
-    console.log(util.inspect(response, {
-      depth: 6,
-      colors: true,
-    }));
-  })
-  .catch(error => {
-    console.log(util.inspect(error, {
-      depth: 6,
-      colors: true,
-    }));
-  });
+  },
+};
+
+cs.create('collectionobjects', config)
+  .then(response => log(response))
+  .catch(error => log(error));
