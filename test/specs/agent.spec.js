@@ -103,37 +103,37 @@ describe('agent', () => {
 
       agent.getHeaders(config).should.not.contain.keys('Authorization');
     });
-    
+
     it('should return a content type header if a type is present', () => {
       const config = {
-        type: 'image/jpeg'
+        type: 'image/jpeg',
       };
 
       agent.getHeaders(config).should.include({
         'Content-Type': 'image/jpeg',
       });
     });
-    
+
     it('should return a content type header with a charset if type is json', () => {
       const config = {
-        type: 'application/json'
+        type: 'application/json',
       };
 
       agent.getHeaders(config).should.include({
         'Content-Type': 'application/json;charset=utf-8',
       });
     });
-    
+
     it('should return a content type header with a charset if type is form', () => {
       const config = {
-        type: 'application/x-www-form-urlencoded'
+        type: 'application/x-www-form-urlencoded',
       };
 
       agent.getHeaders(config).should.include({
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       });
     });
-    
+
     it('should not return a content type header if the type is empty', () => {
       const config = {
         type: '',
@@ -182,7 +182,8 @@ describe('agent', () => {
         description: 'A museum object',
       };
 
-      agent.getFormData(data).should.equal('objectNumber=2016.1.1&description=A+museum+object');
+      agent.getFormData(data).should
+        .equal('objectNumber=2016.1.1&description=A+museum+object');
     });
 
     it('should encode non-ascii characters', () => {
@@ -191,16 +192,18 @@ describe('agent', () => {
         description: 'åéîøü',
       };
 
-      agent.getFormData(data).should.equal('objectNumber=2016.1.1&description=%C3%A5%C3%A9%C3%AE%C3%B8%C3%BC');
+      agent.getFormData(data).should
+        .equal('objectNumber=2016.1.1&description=%C3%A5%C3%A9%C3%AE%C3%B8%C3%BC');
     });
-    
+
     it('should encode puctuation', () => {
       const data = {
         objectNumber: '2016.1.1',
         description: 'this & that = "something"',
       };
 
-      agent.getFormData(data).should.equal('objectNumber=2016.1.1&description=this+%26+that+%3D+%22something%22');
+      agent.getFormData(data).should
+        .equal('objectNumber=2016.1.1&description=this+%26+that+%3D+%22something%22');
     });
   });
 
@@ -215,13 +218,14 @@ describe('agent', () => {
     it('should return the data if type is not form', () => {
       agent.getData(config).should.deep.equal(config.data);
     });
-    
+
     it('should return a url-encoded parameter string if type is form', () => {
       const formConfig = Object.assign({}, config, {
         type: 'application/x-www-form-urlencoded',
       });
-      
-      agent.getData(formConfig).should.equal('objectNumber=2016.1.1&description=A+museum+object');
+
+      agent.getData(formConfig).should
+        .equal('objectNumber=2016.1.1&description=A+museum+object');
     });
   });
 

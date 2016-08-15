@@ -58,7 +58,7 @@ function getHeaders(requestConfig) {
 
   if (config.hasOption(requestConfig, 'type')) {
     let type = requestConfig.type;
-    
+
     if (type === mimeType.form || type === mimeType.json) {
       type = `${type};charset=utf-8`;
     }
