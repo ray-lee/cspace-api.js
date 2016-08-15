@@ -8,9 +8,9 @@ before_script:
 script:
   - npm run check
   - npm run build
-after_success:
   - npm run coverage
-  - "cat coverage/lcov.info | coveralls"
+after_success:
+  - "cat coverage/lcov.info | coveralls --verbose"
 cache:
   directories:
   - $HOME/.npm
