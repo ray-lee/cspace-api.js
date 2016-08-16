@@ -1,9 +1,9 @@
 import agent from './agent';
 import config from './config';
 
-function instance(instanceConfig) {
+function instance(cspaceConfig) {
   const sendRequest = (requestConfig) =>
-    agent.sendRequest(config.merge(instanceConfig, requestConfig));
+    agent.sendRequest(config.merge(cspaceConfig, requestConfig));
 
   const sendRequestWithOperation = (operation) => (resource, requestConfig) =>
     sendRequest(config.merge(requestConfig, {

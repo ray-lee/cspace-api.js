@@ -15,6 +15,7 @@ const authInstanceConfig = {
   url: `${url}/oauth`,
   username: 'cspace-ui',
   password: '',
+  type: 'application/x-www-form-urlencoded',
 };
 
 describe(`token operations on ${url}`, function suite() {
@@ -34,7 +35,6 @@ describe(`token operations on ${url}`, function suite() {
         username: 'admin@core.collectionspace.org',
         password: 'Administrator',
       },
-      type: 'application/x-www-form-urlencoded',
     };
 
     return csAuth.create('token', config).should.eventually
@@ -84,7 +84,6 @@ describe(`token operations on ${url}`, function suite() {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
       },
-      type: 'application/x-www-form-urlencoded',
     };
 
     accessToken = '';
