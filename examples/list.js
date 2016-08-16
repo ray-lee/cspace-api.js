@@ -1,7 +1,7 @@
-import cspace from '../src/cspace';
+import cspace from '../src';
 import log from './helpers/log';
 
-const cs = cspace.instance({
+const cs = cspace({
   url: 'http://nightly.collectionspace.org:8180/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',

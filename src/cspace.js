@@ -1,7 +1,7 @@
 import agent from './agent';
 import config from './config';
 
-function instance(cspaceConfig) {
+export default function cspace(cspaceConfig) {
   const sendRequest = (requestConfig) =>
     agent.sendRequest(config.merge(cspaceConfig, requestConfig));
 
@@ -18,7 +18,3 @@ function instance(cspaceConfig) {
     delete: sendRequestWithOperation('delete'),
   };
 }
-
-export default {
-  instance,
-};

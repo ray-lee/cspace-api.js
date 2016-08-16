@@ -14,7 +14,7 @@ const instanceConfig = {
 describe(`crud operations on ${instanceConfig.url}`, function suite() {
   this.timeout(20000);
 
-  const cs = cspace.instance(instanceConfig);
+  const cs = cspace(instanceConfig);
   const objectNumber = `TEST.${Date.now()}`;
   const comment = `Created by cspace-api.js ${(new Date()).toISOString()}`;
 

@@ -21,8 +21,8 @@ const authInstanceConfig = {
 describe(`token operations on ${url}`, function suite() {
   this.timeout(20000);
 
-  const cs = cspace.instance(instanceConfig);
-  const csAuth = cspace.instance(authInstanceConfig);
+  const cs = cspace(instanceConfig);
+  const csAuth = cspace(authInstanceConfig);
 
   let accessToken = '';
   let refreshToken = '';

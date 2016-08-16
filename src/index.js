@@ -1,1 +1,3 @@
-export { cspace as default } from './cspace';
+import cspace from './cspace';
+
+export default cspace;

@@ -13,7 +13,7 @@ describe('error handling', function suite() {
   const url = 'http://nightly.collectionspace.org:8180/cspace-services';
 
   context('non-existent hostname', () => {
-    const cs = cspace.instance({
+    const cs = cspace({
       url: 'http://xyzy.qaqaqa',
     });
 
@@ -25,7 +25,7 @@ describe('error handling', function suite() {
   });
 
   context('incorrect port number', () => {
-    const cs = cspace.instance({
+    const cs = cspace({
       url: 'http://localhost:7777/cspace-services',
     });
 
@@ -45,7 +45,7 @@ describe('error handling', function suite() {
   });
 
   context(`incorrect password on ${url}`, () => {
-    const cs = cspace.instance({
+    const cs = cspace({
       url,
       username: 'admin@core.collectionspace.org',
       password: 'Wrong',
@@ -61,7 +61,7 @@ describe('error handling', function suite() {
   });
 
   context(`non-existent resource on ${url}`, () => {
-    const cs = cspace.instance({
+    const cs = cspace({
       url,
       username: 'admin@core.collectionspace.org',
       password: 'Administrator',

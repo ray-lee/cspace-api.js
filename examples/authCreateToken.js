@@ -1,7 +1,7 @@
-import cspace from '../src/cspace';
+import cspace from '../src';
 import log from './helpers/log';
 
-const csAuth = cspace.instance({
+const csAuth = cspace({
   url: 'http://nightly.collectionspace.org:8180/cspace-services/oauth',
   username: 'cspace-ui',
   password: '',
