@@ -94,7 +94,7 @@ module.exports = function karma(config) {
     testDirs = config.dir.split(',');
   }
 
-  const files = testDirs.map(dir => `test/${dir}/*.js`);
+  const files = testDirs.map(dir => `test/${dir}/**/*.js`);
 
   config.set({
     browsers,
