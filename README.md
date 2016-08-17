@@ -16,6 +16,7 @@ Using git:
 
 ```
 $ git clone https://github.com/collectionspace/cspace-api.js.git
+$ cd cspace-api.js
 $ npm install
 ```
 
