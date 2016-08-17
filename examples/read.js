@@ -8,5 +8,5 @@ const cs = cspace({
 });
 
 cs.read('collectionobjects/62eba826-cb66-4462-b16e')
-  .then(response => log(response))
-  .catch(error => log(error));
+  .then(response => log('response', response))
+  .catch(error => log('error', error));

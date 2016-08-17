@@ -27,5 +27,5 @@ csAuth.create('token', config)
 
     return csAuth.create('token', refreshConfig);
   })
-  .then(response => log(response))
-  .catch(error => log(error));
+  .then(response => log('response', response))
+  .catch(error => log('error', error));

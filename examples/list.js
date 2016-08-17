@@ -15,5 +15,5 @@ const config = {
 };
 
 cs.read('collectionobjects', config)
-  .then(response => log(response))
-  .catch(error => log(error));
+  .then(response => log('response', response))
+  .catch(error => log('error', error));
