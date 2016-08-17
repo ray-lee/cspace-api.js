@@ -5,6 +5,8 @@
 
 This library provides a JavaScript API for operating on CollectionSpace resources. It is a low-level wrapper around the CollectionSpace Services [REST API](https://wiki.collectionspace.org/display/collectionspace/Common+Services+REST+API+documentation).
 
+Release 4.5 of the CollectionSpace services API, which is currently under development, is required. This library is not compatible with releases 4.4 and earlier.
+
 ## Features
 
 - Supports browsers and Node.js
