@@ -13,6 +13,11 @@
     "api"
   ],
   "main": "lib/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "src"
+  ],
   "scripts": {
     "clean": "rimraf lib dist coverage",
     "coverage": "istanbul report --root coverage text && istanbul report --root coverage lcov",
