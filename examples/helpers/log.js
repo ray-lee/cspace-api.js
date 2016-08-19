@@ -10,6 +10,6 @@ export default function log(message, object) {
     }));
   }
 
-  return Promise.resolve(object);
+  return object;
 }
 
