@@ -1,6 +1,6 @@
 {
   "name": "cspace-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "CollectionSpace services API wrapper for browsers and Node.js",
   "author": "Ray Lee <rhlee@berkeley.edu>",
   "license": "ECL-2.0",
@@ -8,7 +8,6 @@
     "collectionspace",
     "cspace",
     "service",
-    "resource",
     "rest",
     "api"
   ],
@@ -29,6 +28,7 @@
     "coverage": "istanbul report --root coverage text && istanbul report --root coverage lcov",
     "doc": "documentation readme src/*.js -s \"API\"",
     "lint": "eslint *.js src test examples",
+    "prepublish": "npm run clean && npm run build",
     "start": "cross-env NODE_ENV=test karma start",
     "test": "npm run test-node && npm run test-browser",
     "test-specs": "npm run test-node-specs && npm run test-browser-specs",
