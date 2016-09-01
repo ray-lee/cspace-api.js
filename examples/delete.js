@@ -1,3 +1,7 @@
+/**
+ * Delete an object record by CSID.
+ */
+
 import cspace from '../src';
 import log from './helpers/log';
 

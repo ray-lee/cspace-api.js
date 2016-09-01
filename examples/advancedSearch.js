@@ -1,3 +1,7 @@
+/**
+ * Perform an advanced (field-level) search on object records.
+ */
+
 import cspace from '../src';
 import log from './helpers/log';
 

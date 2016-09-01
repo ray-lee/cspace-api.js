@@ -1,3 +1,7 @@
+/**
+ * Retrieve a new access token using a username and password.
+ */
+
 import cspace from '../src';
 import log from './helpers/log';
 

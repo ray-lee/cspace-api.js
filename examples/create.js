@@ -1,3 +1,7 @@
+/**
+ * Create a new object record.
+ */
+
 import cspace from '../src';
 import log from './helpers/log';
 

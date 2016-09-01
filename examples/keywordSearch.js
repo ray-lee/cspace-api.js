@@ -1,3 +1,7 @@
+/**
+ * Perform a keyword (full text) search on object records.
+ */
+
 import cspace from '../src';
 import log from './helpers/log';
 

@@ -1,3 +1,7 @@
+/**
+ * Refresh an access token using a refresh token.
+ */
+
 import cspace from '../src';
 import log from './helpers/log';
 
