@@ -133,7 +133,7 @@ module.exports = function karma(config) {
           {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel',
+            loader: 'babel-loader',
           },
         ],
       },
