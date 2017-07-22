@@ -52,17 +52,17 @@ const sauceLaunchers = {
 
 const getTestFiles = (config) => {
   if (config.file) {
-    return config.file.split(',').map(file => `test/${file}`);
+    return config.file.split(',');
   }
 
   const defaultTestDirs = [
-    'specs',
-    'integration',
+    'test/specs',
+    'test/integration',
   ];
 
   const testDirs = config.dir ? config.dir.split(',') : defaultTestDirs;
 
-  return testDirs.map(dir => `test/${dir}/**/*.+(js|jsx)`);
+  return testDirs.map(dir => `${dir}/**/*.+(js|jsx)`);
 };
 
 module.exports = function karma(config) {
@@ -129,11 +129,15 @@ module.exports = function karma(config) {
     webpack: {
       devtool: 'cheap-module-inline-source-map',
       module: {
-        loaders: [
+        rules: [
           {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
+            use: [
+              {
+                loader: 'babel-loader',
+              },
+            ],
           },
         ],
       },
