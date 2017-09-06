@@ -117,8 +117,8 @@ describe('config', () => {
       };
 
       config.merge(cfg1, cfg2)
-        .should.have.deep.property('data.collectionobjects_common')
-          .that.equals(cfg2.data.collectionobjects_common);
+        .should.have.nested.property('data.collectionobjects_common')
+          .that.deep.equals(cfg2.data.collectionobjects_common);
     });
   });
 
