@@ -75,7 +75,18 @@ describe(`file upload to ${instanceConfig.url}`, function suite() {
         this.skip();
       }
 
-      const file = new File([new Uint8Array(16)], 'test');
+      let file;
+
+      try {
+        file = new File([new Uint8Array(16)], 'test');
+      } catch (err) {
+        if (err.name === 'TypeError' && err.number === -2146823286) {
+          // Edge does not yet support the File constructor. Just skip the test.
+          this.skip();
+        } else {
+          throw err;
+        }
+      }
 
       const config = {
         type: 'multipart/form-data',
