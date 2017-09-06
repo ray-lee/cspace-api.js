@@ -3,6 +3,7 @@
  */
 
 import fs from 'fs';
+import path from 'path';
 import cspace from '../src';
 import log from './helpers/log';
 
@@ -13,13 +14,13 @@ const cs = cspace({
 });
 
 const config = {
-  contentType: 'multipart/form-data',
   data: {
     // 'file' is the name of the field, as specified in REST API docs.
     // In node, the value may be a Buffer or a Stream.
     // In browsers, the value may be a File.
-    file: fs.createReadStream('./'),
+    file: fs.createReadStream(path.resolve(__dirname, '../test/assets/collectionspace.png')),
   },
+  type: 'multipart/form-data',
 };
 
 cs.create('blobs', config)
