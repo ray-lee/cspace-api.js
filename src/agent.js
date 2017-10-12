@@ -68,6 +68,7 @@ function getConfig(requestConfig) {
   const method = methods[requestConfig.operation];
   const baseURL = requestConfig.url;
   const params = requestConfig.params;
+  const responseType = requestConfig.responseType;
 
   let data = null;
 
@@ -118,6 +119,7 @@ function getConfig(requestConfig) {
     params,
     data,
     auth,
+    responseType,
   };
 }
 

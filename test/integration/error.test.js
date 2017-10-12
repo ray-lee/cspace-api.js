@@ -33,7 +33,7 @@ describe('error handling', function suite() {
       cs.read('collectionobjects').should.eventually
         .be.rejected
         .and.have.all.keys(['name', 'code', 'message', 'response'])
-        .then(error => {
+        .then((error) => {
           if (error.response) {
             // MS Edge returns a 502 Bad Gateway response.
             return error.response.should.have.property('status', 502);

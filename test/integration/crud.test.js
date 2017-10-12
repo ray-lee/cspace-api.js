@@ -40,7 +40,7 @@ describe(`crud operations on ${instanceConfig.url}`, function suite() {
     return cs.create('collectionobjects', config).should.eventually
       .include({ status: 201 })
       .and.have.nested.property('headers.location').that.is.ok
-      .then(location => {
+      .then((location) => {
         objectCsid = location.substring(location.lastIndexOf('/') + 1);
       });
   });

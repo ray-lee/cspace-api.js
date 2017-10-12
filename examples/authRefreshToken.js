@@ -21,7 +21,7 @@ const config = {
 };
 
 csAuth.create('token', config)
-  .then(response => {
+  .then((response) => {
     const refreshConfig = {
       data: {
         grant_type: 'refresh_token',

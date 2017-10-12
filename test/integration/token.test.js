@@ -41,7 +41,7 @@ describe(`token operations on ${url}`, function suite() {
       .include({ status: 200 })
       .and.have.property('data')
         .that.contains.all.keys(['access_token', 'refresh_token'])
-        .then(data => {
+        .then((data) => {
           accessToken = data.access_token;
           refreshToken = data.refresh_token;
         });
@@ -69,7 +69,7 @@ describe(`token operations on ${url}`, function suite() {
     return cs.create('collectionobjects', config).should.eventually
       .include({ status: 201 })
       .and.have.nested.property('headers.location').that.is.ok
-      .then(location => {
+      .then((location) => {
         objectCsid = location.substring(location.lastIndexOf('/') + 1);
       });
   });
@@ -93,7 +93,7 @@ describe(`token operations on ${url}`, function suite() {
       .include({ status: 200 })
       .and.have.property('data')
         .that.contains.all.keys(['access_token', 'refresh_token'])
-        .then(data => {
+        .then((data) => {
           accessToken = data.access_token;
           refreshToken = data.refresh_token;
         });
