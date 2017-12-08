@@ -86,7 +86,7 @@ function getConfig(requestConfig) {
 
   if (config.hasOption(requestConfig, 'token')) {
     headers.Authorization = `Bearer ${requestConfig.token}`;
-  } else {
+  } else if (requestConfig.username || requestConfig.password) {
     auth = {
       username: requestConfig.username,
       password: requestConfig.password,

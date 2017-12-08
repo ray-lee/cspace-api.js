@@ -429,5 +429,13 @@ describe('agent', () => {
         password: config.password,
       });
     });
+
+    it('should set auth to null if both username and password are undefined', () => {
+      const config = {};
+
+      const axiosConfig = agent.getConfig(config);
+
+      axiosConfig.should.have.property('auth').that.equals(null);
+    });
   });
 });
