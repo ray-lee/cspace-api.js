@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import cspace from '../../src/cspace';
+import base64Encode from '../helpers/base64Encode';
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -33,7 +34,7 @@ describe(`token operations on ${url}`, function suite() {
       data: {
         grant_type: 'password',
         username: 'admin@core.collectionspace.org',
-        password: 'Administrator',
+        password: base64Encode('Administrator'),
       },
     };
 
