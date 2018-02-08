@@ -47,21 +47,19 @@ describe('config', () => {
       });
     });
 
-    // TODO: This would be nice, but neither extend nor deep-assign
-    //       support overriding with undefined. (Object.assign does,
-    //       but it is not deep.) In the meantime, overriding with
-    //       null or empty string both have the effect of unsetting
-    //       an option.
-    //
+    // TODO: This would be nice, but neither extend nor deep-assign nor lodash support overriding
+    // with undefined. (Object.assign does, but it is not deep.) In the meantime, overriding with
+    // null or empty string both have the effect of unsetting an option.
+
     // it('should allow overriding values with undefined', () => {
     //   const cfg1 = {
     //     operation: 'read',
     //   };
-    //
+
     //   const cfg2 = {
     //     operation: undefined,
     //   };
-    //
+
     //   config.merge(cfg1, cfg2).should.deep.equal({
     //     operation: undefined,
     //   });
@@ -95,30 +93,31 @@ describe('config', () => {
       });
     });
 
-    it('should not copy deep objects unnecessarily', () => {
-      const cfg1 = {
-        operation: 'read',
-        data: {},
-      };
+    // DRYD-265
+    it('should not truncate arrays with undefined values at the end', () => {
+      const cfg1 = {};
 
       const cfg2 = {
         data: {
-          collectionobjects_common: {
-            objectNumber: '1234',
-            comments: {
-              comment: [
-                'comment 1',
-                'comment 2',
-                'comment 3',
-              ],
-            },
-          },
+          states: [
+            'California',
+            'Oregon',
+            undefined,
+            undefined,
+          ],
         },
       };
 
-      config.merge(cfg1, cfg2)
-        .should.have.nested.property('data.collectionobjects_common')
-          .that.deep.equals(cfg2.data.collectionobjects_common);
+      config.merge(cfg1, cfg2).should.deep.equal({
+        data: {
+          states: [
+            'California',
+            'Oregon',
+            undefined,
+            undefined,
+          ],
+        },
+      });
     });
   });
 

@@ -1,6 +1,6 @@
 {
   "name": "cspace-api",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "CollectionSpace services API wrapper for browsers and Node.js",
   "author": "Ray Lee <rhlee@berkeley.edu>",
   "license": "ECL-2.0",
@@ -79,8 +79,8 @@
   },
   "dependencies": {
     "axios": "^0.13.1",
-    "extend": "^3.0.0",
     "form-data": "^2.3.1",
+    "lodash": "^4.17.5",
     "url-search-params": "^0.5.0"
   },
   "nyc": {

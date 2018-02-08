@@ -1,7 +1,11 @@
-import extend from 'extend';
+import lodashMerge from 'lodash/merge';
 
 function merge(...config) {
-  return extend(true, {}, ...config);
+  // TODO: Consider not merging data, as this is potentially a large structure being copied.
+  // Merging data allows some default data to be configured that is always sent, but is there an
+  // actual use case for this?
+
+  return lodashMerge({}, ...config);
 }
 
 function hasValue(value) {
