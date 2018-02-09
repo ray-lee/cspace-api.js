@@ -47,10 +47,13 @@ function toFormData(data) {
   const params = new URLSearchParams();
 
   if (data) {
-    Object.entries(data)
-      // eslint-disable-next-line no-unused-vars
-      .filter(([key, value]) => (value !== null && typeof value !== 'undefined'))
-      .forEach(([key, value]) => params.set(key, value));
+    Object.keys(data).forEach((key) => {
+      const value = data[key];
+
+      if (value !== null && typeof value !== 'undefined') {
+        params.set(key, value);
+      }
+    });
   }
 
   return params.toString();
@@ -60,10 +63,13 @@ function toMultipartFormData(data) {
   const formData = (typeof FormData !== 'undefined') ? new FormData() : new NodeFormData();
 
   if (data) {
-    Object.entries(data)
-      // eslint-disable-next-line no-unused-vars
-      .filter(([key, value]) => (value !== null && typeof value !== 'undefined'))
-      .forEach(([key, value]) => formData.append(key, value));
+    Object.keys(data).forEach((key) => {
+      const value = data[key];
+
+      if (value !== null && typeof value !== 'undefined') {
+        formData.append(key, value);
+      }
+    });
   }
 
   return formData;
