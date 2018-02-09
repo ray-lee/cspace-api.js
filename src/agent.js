@@ -47,7 +47,10 @@ function toFormData(data) {
   const params = new URLSearchParams();
 
   if (data) {
-    Object.keys(data).forEach(key => params.set(key, data[key]));
+    Object.entries(data)
+      // eslint-disable-next-line no-unused-vars
+      .filter(([key, value]) => (value !== null && typeof value !== 'undefined'))
+      .forEach(([key, value]) => params.set(key, value));
   }
 
   return params.toString();
@@ -57,7 +60,10 @@ function toMultipartFormData(data) {
   const formData = (typeof FormData !== 'undefined') ? new FormData() : new NodeFormData();
 
   if (data) {
-    Object.keys(data).forEach(key => formData.append(key, data[key]));
+    Object.entries(data)
+      // eslint-disable-next-line no-unused-vars
+      .filter(([key, value]) => (value !== null && typeof value !== 'undefined'))
+      .forEach(([key, value]) => formData.append(key, value));
   }
 
   return formData;
