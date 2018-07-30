@@ -277,7 +277,7 @@ describe('agent', () => {
         const axiosConfig = agent.getConfig(config);
 
         axiosConfig.should.have.property('data').that
-          .equal('objectNumber=2016.1.1&description=this+%26+that+%3D+%22something%22');
+          .equals('objectNumber=2016.1.1&description=this+%26+that+%3D+%22something%22');
       });
     });
 
