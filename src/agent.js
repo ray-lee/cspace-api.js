@@ -1,9 +1,30 @@
-/* global FormData */
+/* global FormData, window */
 
 import axios from 'axios';
 import NodeFormData from 'form-data';
-import URLSearchParams from 'url-search-params';
 import config from './config';
+
+let nativeURLSearchParams;
+
+// Grr. In MS EdgeHTML 17, URLSearchParams is natively defined, but it has a bug that causes a
+// test failure: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/17700062/
+// So we have to do some shenanigans to ensure that the polyfill continues to be used. Once the
+// Edge bug is fixed, we don't need the polyfill at all, since all the other browsers have good
+// implementations.
+
+if (typeof window !== 'undefined') {
+  nativeURLSearchParams = window.URLSearchParams;
+  window.URLSearchParams = undefined;
+}
+
+// eslint-disable-next-line global-require
+const URLSearchParams = require('url-search-params');
+
+if (typeof window !== 'undefined') {
+  window.URLSearchParams = nativeURLSearchParams;
+}
+
+// End of URLSearchParams polyfill shenanigans.
 
 const MIME_TYPE_FORM = 'application/x-www-form-urlencoded';
 const MIME_TYPE_JSON = 'application/json';
