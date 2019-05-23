@@ -1,8 +1,6 @@
 /* eslint import/no-extraneous-dependencies: "off" */
 /* eslint no-console: "off" */
 
-const webpack = require('webpack');
-
 const sauceLaunchers = {
   'chrome-latest-macos': {
     base: 'SauceLabs',
@@ -126,7 +124,7 @@ module.exports = function karma(config) {
     },
 
     webpack: {
-      devtool: 'cheap-module-inline-source-map',
+      mode: 'development',
       module: {
         rules: [
           {
@@ -140,11 +138,6 @@ module.exports = function karma(config) {
           },
         ],
       },
-      plugins: [
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        }),
-      ],
     },
 
     port: 9876,
