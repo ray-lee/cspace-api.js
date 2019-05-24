@@ -1,6 +1,6 @@
 {
   "name": "cspace-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CollectionSpace services API wrapper for browsers and Node.js",
   "author": "Ray Lee <ray.lee@lyrasis.org>",
   "license": "ECL-2.0",
