@@ -1,8 +1,10 @@
+dist: xenial
+services:
+  - xvfb
 language: node_js
 node_js:
   - "10"
 script:
-  - xvfb-run make test
   - npm run check
 after_success:
   - "cat coverage/lcov.info | coveralls --verbose"
