@@ -33,6 +33,7 @@ describe('agent', () => {
       axiosConfig.should.have.property('baseURL').that.equals(config.url);
       axiosConfig.should.have.property('headers').that.deep.equals({});
       axiosConfig.should.have.property('params').that.deep.equals(config.params);
+      axiosConfig.should.have.property('paramsSerializer').that.is.a('function');
 
       axiosConfig.should.have.property('auth').that.deep.equals({
         username: 'user@collectionspace.org',
@@ -232,6 +233,16 @@ describe('agent', () => {
       const axiosConfig = agent.getConfig(config);
 
       axiosConfig.should.have.property('params').that.deep.equals(config.params);
+    });
+
+    it('should serialize array parameters as multiple query string parameters with the same key', () => {
+      const params = {
+        mode: ['single', 'group'],
+      };
+
+      const axiosConfig = agent.getConfig({});
+
+      axiosConfig.paramsSerializer(params).should.equal('mode=single&mode=group');
     });
 
     context('when type is application/x-www-form-urlencoded', () => {

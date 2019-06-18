@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import NodeFormData from 'form-data';
+import qs from 'qs';
 import config from './config';
 
 let nativeURLSearchParams;
@@ -153,6 +154,7 @@ function getConfig(requestConfig) {
     data,
     auth,
     responseType,
+    paramsSerializer: obj => qs.stringify(obj, { arrayFormat: 'repeat' }),
   };
 }
 
