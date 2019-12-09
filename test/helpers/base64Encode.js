@@ -9,5 +9,5 @@ export default (value) => {
     return window.btoa(value);
   }
 
-  return new Buffer(value).toString('base64');
+  return Buffer.from(value).toString('base64');
 };
