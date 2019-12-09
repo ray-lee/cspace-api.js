@@ -6,7 +6,7 @@ import cspace from '../src';
 import log from './helpers/log';
 
 const csAuth = cspace({
-  url: 'http://nightly.collectionspace.org:8180/cspace-services/oauth',
+  url: 'http://localhost:8180/cspace-services/oauth',
   username: 'cspace-ui',
   password: '',
   type: 'application/x-www-form-urlencoded',

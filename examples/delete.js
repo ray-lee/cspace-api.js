@@ -6,7 +6,7 @@ import cspace from '../src';
 import log from './helpers/log';
 
 const cs = cspace({
-  url: 'http://nightly.collectionspace.org:8180/cspace-services',
+  url: 'http://localhost:8180/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 });
