@@ -62,9 +62,9 @@ describe(`crud operations on ${instanceConfig.url}`, function suite() {
     return cs.read('collectionobjects', config).should.eventually
       .include({ status: 200 })
       .and.have.property('data')
-        .with.property('ns2:abstract-common-list')
-          .with.property('list-item')
-            .with.property('csid', objectCsid);
+      .with.property('ns2:abstract-common-list')
+      .with.property('list-item')
+      .with.property('csid', objectCsid);
   });
 
   it('can read the record', function test() {
@@ -75,11 +75,11 @@ describe(`crud operations on ${instanceConfig.url}`, function suite() {
     return cs.read(`collectionobjects/${objectCsid}`).should.eventually
       .include({ status: 200 })
       .and.have.property('data')
-        .with.property('document')
-          .with.property('ns2:collectionobjects_common')
-            .that.includes({ objectNumber })
-            .and.has.property('comments')
-              .with.property('comment', comment);
+      .with.property('document')
+      .with.property('ns2:collectionobjects_common')
+      .that.includes({ objectNumber })
+      .and.has.property('comments')
+      .with.property('comment', comment);
   });
 
   it('can update the record', function test() {
@@ -107,11 +107,11 @@ describe(`crud operations on ${instanceConfig.url}`, function suite() {
     return cs.update(`collectionobjects/${objectCsid}`, config).should.eventually
       .include({ status: 200 })
       .and.have.property('data')
-        .with.property('document')
-          .with.property('ns2:collectionobjects_common')
-            .that.includes({ objectNumber })
-            .and.has.property('comments')
-              .with.property('comment', commentUpdate);
+      .with.property('document')
+      .with.property('ns2:collectionobjects_common')
+      .that.includes({ objectNumber })
+      .and.has.property('comments')
+      .with.property('comment', commentUpdate);
   });
 
   it('can delete the record', function test() {

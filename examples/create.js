@@ -28,5 +28,5 @@ const config = {
 };
 
 cs.create('collectionobjects', config)
-  .then(response => log('response', response))
-  .catch(error => log('error', error));
+  .then((response) => log('response', response))
+  .catch((error) => log('error', error));

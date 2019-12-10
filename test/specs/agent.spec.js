@@ -3,7 +3,7 @@
 import chai from 'chai';
 import agent from '../../src/agent';
 
-const expect = chai.expect;
+const { expect } = chai;
 
 chai.should();
 

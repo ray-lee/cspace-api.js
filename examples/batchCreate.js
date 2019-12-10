@@ -16,8 +16,9 @@ const cs = cspace({
 // large object number range. In the real world, limit the number of simultaneous creates.
 
 Promise.all(
-  Array.from(objectNumbers('TEST-', 100, 200), objectNumber =>
-    cs.create('collectionobjects', {
+  Array.from(
+    objectNumbers('TEST-', 100, 200),
+    (objectNumber) => cs.create('collectionobjects', {
       data: {
         document: {
           '@name': 'collectionobjects',
@@ -28,8 +29,8 @@ Promise.all(
         },
       },
     })
-    .then(() => log(`Created ${objectNumber}`))
-    .catch(() => log(`Error creating ${objectNumber}`))
-  )
+      .then(() => log(`Created ${objectNumber}`))
+      .catch(() => log(`Error creating ${objectNumber}`)),
+  ),
 )
-.then(() => log('Done'));
+  .then(() => log('Done'));

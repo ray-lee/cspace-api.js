@@ -54,8 +54,8 @@ function createError(axiosError) {
 }
 
 axios.interceptors.response.use(
-  response => createResponse(response),
-  error => Promise.reject(createError(error))
+  (response) => createResponse(response),
+  (error) => Promise.reject(createError(error)),
 );
 
 const methods = {
@@ -98,11 +98,14 @@ function toMultipartFormData(data) {
 }
 
 function getConfig(requestConfig) {
-  const url = requestConfig.resource;
+  const {
+    resource: url,
+    url: baseURL,
+    params,
+    responseType,
+  } = requestConfig;
+
   const method = methods[requestConfig.operation];
-  const baseURL = requestConfig.url;
-  const params = requestConfig.params;
-  const responseType = requestConfig.responseType;
 
   let data = null;
 
@@ -128,7 +131,7 @@ function getConfig(requestConfig) {
   }
 
   if (config.hasOption(requestConfig, 'type')) {
-    const type = requestConfig.type;
+    const { type } = requestConfig;
 
     if (type === MIME_TYPE_FORM || type === MIME_TYPE_JSON) {
       headers['Content-Type'] = `${type};charset=utf-8`;
@@ -154,7 +157,7 @@ function getConfig(requestConfig) {
     data,
     auth,
     responseType,
-    paramsSerializer: obj => qs.stringify(obj, { arrayFormat: 'repeat' }),
+    paramsSerializer: (obj) => qs.stringify(obj, { arrayFormat: 'repeat' }),
   };
 }
 

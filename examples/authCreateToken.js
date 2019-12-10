@@ -21,5 +21,5 @@ const config = {
 };
 
 csAuth.create('token', config)
-  .then(response => log('response', response))
-  .catch(error => log('error', error));
+  .then((response) => log('response', response))
+  .catch((error) => log('error', error));

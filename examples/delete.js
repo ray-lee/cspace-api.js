@@ -12,5 +12,5 @@ const cs = cspace({
 });
 
 cs.delete('collectionobjects/137eacd9-3e17-4c9f-9aec')
-  .then(response => log('response', response))
-  .catch(error => log('error', error));
+  .then((response) => log('response', response))
+  .catch((error) => log('error', error));

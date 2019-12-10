@@ -27,5 +27,5 @@ const config = {
 };
 
 cs.update('collectionobjects/62eba826-cb66-4462-b16e', config)
-  .then(response => log('response', response))
-  .catch(error => log('error', error));
+  .then((response) => log('response', response))
+  .catch((error) => log('error', error));

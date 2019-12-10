@@ -24,5 +24,5 @@ const config = {
 };
 
 cs.create('blobs', config)
-  .then(response => log('response', response))
-  .catch(error => log('error', error));
+  .then((response) => log('response', response))
+  .catch((error) => log('error', error));

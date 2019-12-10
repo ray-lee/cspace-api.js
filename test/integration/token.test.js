@@ -40,12 +40,11 @@ describe(`token operations on ${url}`, function suite() {
 
     return csAuth.create('token', config).should.eventually
       .include({ status: 200 })
-      .and.have.property('data')
-        .that.contains.all.keys(['access_token', 'refresh_token'])
-        .then((data) => {
-          accessToken = data.access_token;
-          refreshToken = data.refresh_token;
-        });
+      .and.have.property('data').that.contains.all.keys(['access_token', 'refresh_token'])
+      .then((data) => {
+        accessToken = data.access_token;
+        refreshToken = data.refresh_token;
+      });
   });
 
   it('can create a record using the access token', function test() {
@@ -92,12 +91,11 @@ describe(`token operations on ${url}`, function suite() {
 
     return csAuth.create('token', config).should.eventually
       .include({ status: 200 })
-      .and.have.property('data')
-        .that.contains.all.keys(['access_token', 'refresh_token'])
-        .then((data) => {
-          accessToken = data.access_token;
-          refreshToken = data.refresh_token;
-        });
+      .and.have.property('data').that.contains.all.keys(['access_token', 'refresh_token'])
+      .then((data) => {
+        accessToken = data.access_token;
+        refreshToken = data.refresh_token;
+      });
   });
 
   it('can delete the record using the new access token', function test() {
