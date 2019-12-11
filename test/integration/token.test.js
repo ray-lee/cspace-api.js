@@ -6,7 +6,7 @@ import base64Encode from '../helpers/base64Encode';
 chai.use(chaiAsPromised);
 chai.should();
 
-const url = 'http://localhost:8180/cspace-services';
+const url = 'https://core.dev.collectionspace.org/cspace-services';
 
 const instanceConfig = {
   url,

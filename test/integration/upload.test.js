@@ -8,7 +8,7 @@ chai.use(chaiAsPromised);
 chai.should();
 
 const instanceConfig = {
-  url: 'http://localhost:8180/cspace-services',
+  url: 'https://core.dev.collectionspace.org/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 };

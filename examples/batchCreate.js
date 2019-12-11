@@ -7,7 +7,7 @@ import log from './helpers/log';
 import objectNumbers from './helpers/objectNumberGenerator';
 
 const cs = cspace({
-  url: 'http://localhost:8180/cspace-services',
+  url: 'https://core.dev.collectionspace.org/cspace-services',
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 });
