@@ -138,7 +138,6 @@ describe('config', () => {
       config.hasOption(cfg, 'pgNum').should.equal(true);
     });
 
-
     it('should return true if the option is an empty object', () => {
       const cfg = {
         data: {},
