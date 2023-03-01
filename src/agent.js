@@ -157,7 +157,9 @@ function getConfig(requestConfig) {
     data,
     auth,
     responseType,
-    paramsSerializer: (obj) => qs.stringify(obj, { arrayFormat: 'repeat' }),
+    paramsSerializer: {
+      serialize: (obj) => qs.stringify(obj, { arrayFormat: 'repeat' }),
+    },
   };
 }
 

@@ -10,7 +10,7 @@ chai.should();
 describe('error handling', function suite() {
   this.timeout(20000);
 
-  const url = 'https://core.dev.collectionspace.org/cspace-services';
+  const url = 'http://localhost:8180/cspace-services';
 
   context('non-existent hostname', () => {
     const cs = cspace({
