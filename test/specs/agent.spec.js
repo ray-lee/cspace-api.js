@@ -295,13 +295,10 @@ describe('agent', () => {
     context('when type is multipart/form-data', () => {
       const isNode = (typeof window === 'undefined');
 
-      it('should convert the data to a form-data FormData object in node', function test() {
+      it('should convert the data to a built-in FormData object in node', function test() {
         if (!isNode) {
           this.skip();
         }
-
-        // eslint-disable-next-line global-require
-        const FormData = require('form-data');
 
         const config = {
           data: {
@@ -316,8 +313,8 @@ describe('agent', () => {
         axiosConfig.should.have.property('data').that.is.instanceOf(FormData);
       });
 
-      it('should set the content type header to have a boundary in node', function test() {
-        if (!isNode) {
+      it('should set the content type header to have a boundary in node when there is no built-in FormData', function test() {
+        if (!isNode || (typeof FormData !== 'undefined')) {
           this.skip();
         }
 

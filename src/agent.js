@@ -1,7 +1,7 @@
 /* global FormData, window */
 
 import axios from 'axios';
-import NodeFormData from 'form-data';
+import PolyfillFormData from 'form-data';
 import qs from 'qs';
 import config from './config';
 
@@ -82,7 +82,7 @@ function toFormData(data) {
 }
 
 function toMultipartFormData(data) {
-  const formData = (typeof FormData !== 'undefined') ? new FormData() : new NodeFormData();
+  const formData = (typeof FormData !== 'undefined') ? new FormData() : new PolyfillFormData();
 
   if (data) {
     Object.keys(data).forEach((key) => {
