@@ -116,7 +116,7 @@ module.exports = function karma(config) {
 
     coverageReporter: {
       type: 'json',
-      dir: 'coverage/',
+      dir: `coverage/${process.env.npm_lifecycle_event}`,
     },
 
     middleware: process.env.npm_lifecycle_event === 'test-browser-integration'
