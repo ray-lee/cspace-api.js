@@ -119,7 +119,9 @@ module.exports = function karma(config) {
       dir: 'coverage/',
     },
 
-    middleware: ['proxy'],
+    middleware: process.env.npm_lifecycle_event === 'test-browser-integration'
+      ? ['proxy']
+      : [],
 
     plugins: [
       'karma-*',
