@@ -2,8 +2,7 @@
 
 
 [![npm package](https://img.shields.io/npm/v/cspace-api.svg)](https://www.npmjs.com/package/cspace-api)
-[![build status](https://travis-ci.org/collectionspace/cspace-api.js.svg?branch=master)](https://travis-ci.org/collectionspace/cspace-api.js)
-[![coverage status](https://coveralls.io/repos/github/collectionspace/cspace-api.js/badge.svg?branch=master)](https://coveralls.io/github/collectionspace/cspace-api.js?branch=master)
+[![continuous integration](https://github.com/collectionspace/cspace-api.js/actions/workflows/ci-js.yml/badge.svg?branch=master&event=push)](https://github.com/collectionspace/cspace-api.js/actions/workflows/ci-js.yml)
 
 This library provides a JavaScript API for operating on CollectionSpace resources. It is a low-level wrapper around the CollectionSpace Services [REST API](https://wiki.collectionspace.org/display/collectionspace/Common+Services+REST+API+documentation).
 
