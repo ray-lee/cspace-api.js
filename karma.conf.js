@@ -124,25 +124,28 @@ module.exports = function karma(config) {
       : [],
 
     plugins: [
-      'karma-*',
+      ...config.plugins,
+
       {
         // A middleware that proxies cspace-services requests to the URL specified by TEST_BACKEND.
         // This is used to avoid CORS issues when connecting to a CSpace server from an integration
         // test running in a browser.
 
-        'middleware:proxy': ['value', createProxyMiddleware({
-          target: TEST_BACKEND,
-          pathFilter: '/cspace-services',
-          changeOrigin: true,
-          headers: {
-            origin: TEST_BACKEND,
-          },
-          onProxyRes: (proxyRes) => {
-            // Prevent the browser from showing the login prompt.
-            // eslint-disable-next-line no-param-reassign
-            delete proxyRes.headers['www-authenticate'];
-          },
-        })],
+        'middleware:proxy': ['factory', function create() {
+          return createProxyMiddleware({
+            target: TEST_BACKEND,
+            pathFilter: '/cspace-services',
+            changeOrigin: true,
+            headers: {
+              origin: TEST_BACKEND,
+            },
+            onProxyRes: (proxyRes) => {
+              // Prevent the browser from showing the login prompt.
+              // eslint-disable-next-line no-param-reassign
+              delete proxyRes.headers['www-authenticate'];
+            },
+          });
+        }],
       },
     ],
   });
