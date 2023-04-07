@@ -39,7 +39,7 @@
     "test-browser": "cross-env NODE_ENV=test karma start --singleRun=true",
     "test-browser-specs": "cross-env NODE_ENV=test karma start --singleRun=true --dir=test/specs",
     "test-browser-integration": "cross-env NODE_ENV=test karma start --singleRun=true --dir=test/integration",
-    "test-node": "cross-env NODE_ENV=test nyc mocha --require @babel/register --recursive test",
+    "test-node": "cross-env NODE_ENV=test nyc mocha --require @babel/register --file test/helpers/nodeTestSetup.js --recursive test",
     "test-node-specs": "cross-env NODE_ENV=test nyc mocha --require @babel/register --recursive test/specs",
     "test-node-integration": "cross-env NODE_ENV=test nyc mocha --require @babel/register --file test/helpers/nodeTestSetup.js --recursive test/integration"
   },
