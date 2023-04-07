@@ -1,3 +1,5 @@
+/* global globalThis */
+
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import cspace from '../../src/cspace';
@@ -6,7 +8,7 @@ import base64Encode from '../helpers/base64Encode';
 chai.use(chaiAsPromised);
 chai.should();
 
-const url = 'http://127.0.0.1:8180/cspace-services';
+const url = `${globalThis.TEST_BACKEND}/cspace-services`;
 
 const instanceConfig = {
   url,

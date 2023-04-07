@@ -1,6 +1,10 @@
 /* eslint no-console: "off" */
 
 const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const webpack = require('webpack');
+
+const TEST_BACKEND = 'https://core.dev.collectionspace.org';
 
 const getTestFiles = (config) => {
   if (config.file) {
@@ -65,6 +69,15 @@ module.exports = function karma(config) {
           },
         ],
       },
+      plugins: [
+        new webpack.DefinePlugin({
+          // Set the back end server to use in integration tests to this local Karma server.
+          // A middleware is installed to proxy cspace-services requests to the URL specified
+          // by TEST_BACKEND.
+
+          'globalThis.TEST_BACKEND': JSON.stringify('http://localhost:9876'),
+        }),
+      ],
       resolve: {
         fallback: {
           fs: false,
@@ -83,5 +96,30 @@ module.exports = function karma(config) {
       type: 'json',
       dir: 'coverage/',
     },
+
+    middleware: ['proxy'],
+
+    plugins: [
+      'karma-*',
+      {
+        // A middleware that proxies cspace-services requests to the URL specified by TEST_BACKEND.
+        // This is used to avoid CORS issues when connecting to a CSpace server from an integration
+        // test running in a browser.
+
+        'middleware:proxy': ['value', createProxyMiddleware({
+          target: TEST_BACKEND,
+          pathFilter: '/cspace-services',
+          changeOrigin: true,
+          headers: {
+            origin: TEST_BACKEND,
+          },
+          onProxyRes: (proxyRes) => {
+            // Prevent the browser from showing the login prompt.
+            // eslint-disable-next-line no-param-reassign
+            delete proxyRes.headers['www-authenticate'];
+          },
+        })],
+      },
+    ],
   });
 };

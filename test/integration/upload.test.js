@@ -1,4 +1,4 @@
-/* global File */
+/* global globalThis, File */
 
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
@@ -8,7 +8,7 @@ chai.use(chaiAsPromised);
 chai.should();
 
 const instanceConfig = {
-  url: 'http://127.0.0.1:8180/cspace-services',
+  url: `${globalThis.TEST_BACKEND}/cspace-services`,
   username: 'admin@core.collectionspace.org',
   password: 'Administrator',
 };

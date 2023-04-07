@@ -1,3 +1,5 @@
+/* global globalThis */
+
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import cspace from '../../src/cspace';
@@ -10,7 +12,7 @@ chai.should();
 describe('error handling', function suite() {
   this.timeout(20000);
 
-  const url = 'http://127.0.0.1:8180/cspace-services';
+  const url = `${globalThis.TEST_BACKEND}/cspace-services`;
 
   context('non-existent hostname', () => {
     const cs = cspace({

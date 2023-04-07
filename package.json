@@ -41,7 +41,7 @@
     "test-browser-integration": "cross-env NODE_ENV=test karma start --singleRun=true --dir=test/integration",
     "test-node": "cross-env NODE_ENV=test nyc mocha --require @babel/register --recursive test",
     "test-node-specs": "cross-env NODE_ENV=test nyc mocha --require @babel/register --recursive test/specs",
-    "test-node-integration": "cross-env NODE_ENV=test nyc mocha --require @babel/register --recursive test/integration"
+    "test-node-integration": "cross-env NODE_ENV=test nyc mocha --require @babel/register --file test/helpers/nodeTestSetup.js --recursive test/integration"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -59,6 +59,7 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
+    "http-proxy-middleware": "^2.0.6",
     "istanbul": "^0.4.5",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
