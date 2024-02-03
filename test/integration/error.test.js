@@ -14,6 +14,30 @@ describe('error handling', function suite() {
 
   const url = `${globalThis.TEST_BACKEND}/cspace-services`;
 
+  before(() => {
+    // Ensure that the browser doesn't have a logged in session, since this will throw off the
+    // login tests.
+
+    const cs = cspace({
+      url,
+      type: 'application/x-www-form-urlencoded',
+    });
+
+    return cs.read('logout')
+      .then(({ data }) => {
+        const match = data.match(/"token":"(.*?)"/);
+        const csrfToken = match[1];
+
+        const config = {
+          data: {
+            _csrf: csrfToken,
+          },
+        };
+
+        return cs.create('/logout', config);
+      });
+  });
+
   context('non-existent hostname', () => {
     const cs = cspace({
       url: 'http://xyzy.qaqaqa',

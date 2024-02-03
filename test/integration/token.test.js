@@ -1,9 +1,8 @@
 /* global globalThis */
-
+import qs from 'qs';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import cspace from '../../src/cspace';
-import base64Encode from '../helpers/base64Encode';
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -14,38 +13,100 @@ const instanceConfig = {
   url,
 };
 
+const loginInstanceConfig = {
+  url: `${url}/login`,
+  type: 'application/x-www-form-urlencoded',
+};
+
 const authInstanceConfig = {
-  url: `${url}/oauth`,
-  username: 'cspace-ui',
-  password: '',
+  url: `${url}/oauth2`,
   type: 'application/x-www-form-urlencoded',
 };
 
 describe(`token operations on ${url}`, function suite() {
   this.timeout(20000);
 
+  const inNode = (typeof window === 'undefined');
+
   const cs = cspace(instanceConfig);
+  const csLogin = cspace(loginInstanceConfig);
   const csAuth = cspace(authInstanceConfig);
 
   let accessToken = '';
-  let refreshToken = '';
   let objectCsid = '';
 
-  it('can obtain an access token', () => {
-    const config = {
-      data: {
-        grant_type: 'password',
-        username: 'admin@core.collectionspace.org',
-        password: base64Encode('Administrator'),
-      },
-    };
+  it('can obtain an access token', function test() {
+    if (!inNode) {
+      // In a browser, axios currently can't be set to not follow redirects, which makes it
+      // impossible to execute the oauth authorization code flow.
 
-    return csAuth.create('token', config).should.eventually
+      this.skip();
+    }
+
+    return csLogin.read('')
+      .then(({ headers, data }) => {
+        const setCookieHeader = headers['set-cookie'][0];
+        const cookie = setCookieHeader.split(';')[0];
+
+        const match = data.match(/"token":"(.*?)"/);
+        const csrfToken = match[1];
+
+        const config = {
+          headers: {
+            Cookie: cookie,
+          },
+          data: {
+            username: 'admin@core.collectionspace.org',
+            password: 'Administrator',
+            _csrf: csrfToken,
+          },
+          maxRedirects: 0,
+        };
+
+        return csLogin.create('', config);
+      })
+      .then(({ headers }) => {
+        const setCookieHeader = headers['set-cookie'][0];
+        const cookie = setCookieHeader.split(';')[0];
+
+        const config = {
+          headers: {
+            Cookie: cookie,
+          },
+          maxRedirects: 0,
+          params: {
+            response_type: 'code',
+            client_id: 'cspace-ui',
+            scope: 'cspace.full',
+            redirect_uri: '/../cspace/core/authorized',
+            code_challenge: 'Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI',
+            code_challenge_method: 'S256',
+          },
+        };
+
+        return csAuth.read('/authorize', config);
+      })
+      .then(({ headers }) => {
+        const queryString = headers.location.split('?')[1];
+        const params = qs.parse(queryString);
+
+        const config = {
+          params: {
+            grant_type: 'authorization_code',
+            code: params.code,
+            redirect_uri: '/../cspace/core/authorized',
+            client_id: 'cspace-ui',
+            code_verifier: 'xyz',
+          },
+        };
+
+        return csAuth.create('token', config);
+      })
+      .should.eventually
       .include({ status: 200 })
-      .and.have.property('data').that.contains.all.keys(['access_token', 'refresh_token'])
+      .and.have.property('data').that.contains.all.keys(['access_token'])
       .then((data) => {
         accessToken = data.access_token;
-        refreshToken = data.refresh_token;
       });
   });
 
@@ -76,31 +137,7 @@ describe(`token operations on ${url}`, function suite() {
       });
   });
 
-  it('can refresh the access token using the refresh token', function test() {
-    if (!refreshToken) {
-      this.skip();
-    }
-
-    const config = {
-      data: {
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-      },
-    };
-
-    accessToken = '';
-    refreshToken = '';
-
-    return csAuth.create('token', config).should.eventually
-      .include({ status: 200 })
-      .and.have.property('data').that.contains.all.keys(['access_token', 'refresh_token'])
-      .then((data) => {
-        accessToken = data.access_token;
-        refreshToken = data.refresh_token;
-      });
-  });
-
-  it('can delete the record using the new access token', function test() {
+  it('can delete the record using the access token', function test() {
     if (!accessToken || !objectCsid) {
       this.skip();
     }
