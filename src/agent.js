@@ -101,6 +101,7 @@ function getConfig(requestConfig) {
   const {
     resource: url,
     url: baseURL,
+    maxRedirects,
     params,
     responseType,
   } = requestConfig;
@@ -117,12 +118,12 @@ function getConfig(requestConfig) {
     data = requestConfig.data;
   }
 
-  const headers = {};
+  const computedHeaders = {};
 
   let auth = null;
 
   if (config.hasOption(requestConfig, 'token')) {
-    headers.Authorization = `Bearer ${requestConfig.token}`;
+    computedHeaders.Authorization = `Bearer ${requestConfig.token}`;
   } else if (requestConfig.username || requestConfig.password) {
     auth = {
       username: requestConfig.username,
@@ -134,25 +135,31 @@ function getConfig(requestConfig) {
     const { type } = requestConfig;
 
     if (type === MIME_TYPE_FORM || type === MIME_TYPE_JSON) {
-      headers['Content-Type'] = `${type};charset=utf-8`;
+      computedHeaders['Content-Type'] = `${type};charset=utf-8`;
     } else if (type === MIME_TYPE_MULTIPART_FORM_DATA) {
       if (data && data.getHeaders) {
         // If we're in node, using form-data, axios won't natively know what to do (it just sees a
         // stream). We need to manually set the content type header to have the correct mime type
         // and boundary, using the getHeaders method. If we're in a browser, using the built-in
         // FormData, the header will be set automatically, so we don't have to do anything.
-        headers['Content-Type'] = data.getHeaders()['content-type'];
+        computedHeaders['Content-Type'] = data.getHeaders()['content-type'];
       }
     } else {
-      headers['Content-Type'] = type;
+      computedHeaders['Content-Type'] = type;
     }
   }
+
+  const headers = {
+    ...computedHeaders,
+    ...requestConfig.headers,
+  };
 
   return {
     url,
     method,
     baseURL,
     headers,
+    maxRedirects,
     params,
     data,
     auth,
@@ -160,6 +167,9 @@ function getConfig(requestConfig) {
     paramsSerializer: {
       serialize: (obj) => qs.stringify(obj, { arrayFormat: 'repeat' }),
     },
+    validateStatus: (status) => (
+      status >= 200 && status < 400
+    ),
   };
 }
 
